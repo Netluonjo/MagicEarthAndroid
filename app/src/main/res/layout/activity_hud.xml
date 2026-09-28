@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hud_pure_black"
+    android:keepScreenOn="true">
+
+    <!-- MIRRORED / DIRECT CONTAINER FOR WINDSHIELD PROJECTION -->
+    <LinearLayout
+        android:id="@+id/hudMirroredContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:scaleX="-1">
+
+        <TextView
+            android:id="@+id/tvHudTurnIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="➔"
+            android:textColor="@color/me_accent_cyan"
+            android:textSize="88sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvHudDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-- m"
+            android:textColor="@color/me_text_primary"
+            android:textSize="56sp"
+            android:textStyle="bold" />
+
+        <!-- Highway Exit Badge on Windshield -->
+        <TextView
+            android:id="@+id/tvHudExitBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_exit_badge"
+            android:text="LỐI RA 08"
+            android:textColor="#0F172A"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:layout_marginTop="4dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvHudStreet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang dò đường"
+            android:textColor="@color/me_text_secondary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- Live Telemetry Cluster -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="28dp">
+
+            <!-- Live GPS Speed -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="32dp">
+
+                <TextView
+                    android:id="@+id/tvHudSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/me_accent_cyan"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KM/H (GPS)"
+                    android:textColor="@color/me_text_muted"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Speed Limit -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="32dp">
+
+                <TextView
+                    android:id="@+id/tvHudLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60"
+                    android:textColor="@color/me_accent_red"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GIỚI HẠN"
+                    android:textColor="@color/me_text_muted"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Speed Camera Warning Indicator in HUD -->
+        <TextView
+            android:id="@+id/tvHudCameraAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_camera_banner"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:text="📷 CẢNH BÁO: CAMERA BẮN TỐC ĐỘ"
+            android:textColor="@color/me_accent_red"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Top Overlay Bar (Direct readable, Not Mirrored) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btnToggleMirror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⇄ Lật gương (Kính lái)"
+            android:textColor="@color/me_accent_cyan"
+            android:textSize="12sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnExitHud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit_hud"
+            android:textColor="@color/me_text_secondary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
+    android:overScrollMode="always"
+    android:background="@drawable/bg_bottom_sheet_dialog">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="28dp">
+
+        <!-- Bottom Sheet Top Drag Handle Indicator -->
+        <View
+            android:layout_width="48dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_bottom_sheet_handle" />
+
+        <!-- Title Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📥"
+                android:textSize="24sp"
+                android:layout_marginEnd="10dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bản Đồ Ngoại Tuyến (Offline Maps)"
+                    android:textColor="@color/me_text_primary"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tải về máy để xem bản đồ &amp; dẫn đường khi mất mạng 4G/Wifi"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11.5sp"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnCloseOfflineTop"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="@color/me_text_muted"
+                android:contentDescription="Đóng" />
+        </LinearLayout>
+
+        <!-- Offline Simulation Switch Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/me_bg_card_elevated">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chế độ Không Mạng (Offline Mode)"
+                        android:textColor="@color/me_text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngắt kết nối mạng bản đồ để kiểm tra xem ngoại tuyến"
+                        android:textColor="@color/me_text_muted"
+                        android:textSize="10.5sp"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchOfflineMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Storage Progress Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_glass_card"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvStorageUsage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bộ nhớ thiết bị: Đang tính toán..."
+                android:textColor="@color/me_accent_cyan"
+                android:textSize="11.5sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pbStorage"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="8dp"
+                android:progress="20"
+                android:max="100" />
+        </LinearLayout>
+
+        <!-- Active Download Progress Card (Visible during active download) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardActiveDownload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#251E3A5F"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvDownloadTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đang tải: Hà Nội (Nội thành)"
+                        android:textColor="@color/me_accent_cyan"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCancelDownload"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="Hủy"
+                        android:textSize="10.5sp"
+                        android:textColor="@color/me_accent_red"
+                        app:cornerRadius="16dp" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pbDownloadProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="10dp"
+                    android:max="100"
+                    android:progress="0" />
+
+                <TextView
+                    android:id="@+id/tvDownloadStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đang chuẩn bị gói dữ liệu vector OSM..."
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Download Action Presets -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn khu vực để tải về:"
+            android:textColor="@color/me_text_primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lướt xuống để xem thêm các tỉnh thành hoặc tải vùng bạn đang xem:"
+            android:textColor="@color/me_text_muted"
+            android:textSize="10.5sp"
+            android:layout_marginTop="2dp" />
+
+        <!-- Download Visible Map Area -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadCurrentView"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            android:text="📍 Tải vùng đang xem trên màn hình"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#0B0E14"
+            app:backgroundTint="#76FF03"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 1: Hà Nội -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadHanoi"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="🇻🇳 Tải Hà Nội • ~20 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 2: TP. Hồ Chí Minh -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadHcm"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="🏙️ Tải TP. Hồ Chí Minh • ~25 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 3: Đà Nẵng -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadDanang"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="🌉 Tải Đà Nẵng &amp; Hội An • ~18 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 4: Hải Phòng & Hạ Long -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadHaiPhong"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="⚓ Tải Hải Phòng &amp; Hạ Long • ~20 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 5: Cần Thơ -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadCanTho"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="🌾 Tải Cần Thơ • ~15 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 6: Nha Trang -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadNhaTrang"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="🏖️ Tải Nha Trang • ~15 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Preset 7: Đà Lạt -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadDaLat"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="44dp"
+            android:layout_marginTop="6dp"
+            android:text="🌲 Tải Đà Lạt • ~12 MB"
+            android:textSize="12sp"
+            android:textColor="@color/me_text_primary"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="14dp"
+            app:cornerRadius="12dp" />
+
+        <!-- Downloaded Regions List Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bản đồ đã lưu trong máy:"
+            android:textColor="@color/me_text_primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvNoDownloadedMaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có bản đồ nào được tải. Hãy chọn một khu vực ở trên để tải về."
+            android:textColor="@color/me_text_muted"
+            android:textSize="11.5sp"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutDownloadedRegions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp" />
+
+        <!-- Footer Dismiss Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCloseOfflineDialog"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="20dp"
+            android:text="Đóng"
+            android:textColor="@color/me_text_primary"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

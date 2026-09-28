@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Magic Earth</string>
+    <string name="privacy_badge">🔒 100% Privacy - Không theo dõi</string>
+    <string name="search_hint">Tìm kiếm địa điểm, cây xăng, trạm sạc EV...</string>
+    <string name="start_navigation">Bắt Đầu Dẫn Đường</string>
+    <string name="stop_navigation">Dừng dẫn đường</string>
+    <string name="hud_title">Head-Up Display (HUD)</string>
+    <string name="hud_hint">Đặt điện thoại lên taplo xe dưới kính chắn gió ban đêm</string>
+    <string name="exit_hud">Thoát HUD</string>
+    <string name="offline_maps">📥 Tải Bản Đồ</string>
+    <string name="speed_unit">km/h</string>
+    <string name="trip_recorder">Ghi log hành trình</string>
+    <string name="start_record">Bắt đầu ghi</string>
+    <string name="stop_record">Dừng ghi</string>
+    <string name="export_gpx">Xuất GPX</string>
+    <string name="speed_camera_alert">Camera Giám Sát Tốc Độ Phía Trước</string>
+
+    <!-- Layers & Styles -->
+    <string name="layer_vector_2d">Bản Đồ 2D Tiêu Chuẩn (Mặt phẳng)</string>
+    <string name="layer_vector_3d">Bản Đồ Vector 3D (Khối nhà OSM)</string>
+    <string name="layer_satellite">Ảnh Vệ Tinh (Satellite)</string>
+    <string name="layer_terrain">Bản Đồ Địa hình (Terrain / Đổ bóng)</string>
+    <string name="layer_dark">Chế Độ Đêm (Dark OLED)</string>
+    <string name="select_map_style">Chọn Kiểu Hiển Thị Bản Đồ</string>
+
+    <!-- Incident Reporting -->
+    <string name="report_incident">Báo Cáo Sự Cố Giao Thông</string>
+    <string name="incident_accident">🚗 Tai nạn giao thông</string>
+    <string name="incident_speed_trap">📷 Camera / Bắn tốc độ</string>
+    <string name="incident_roadwork">🚧 Công trường thi công</string>
+    <string name="incident_hazard">⚠️ Chướng ngại vật / Ngập úng</string>
+    <string name="incident_reported_thanks">Cảm ơn bạn! Đã chia sẻ báo cáo tới cộng đồng Magic Earth.</string>
+
+    <!-- Truck Configuration -->
+    <string name="truck_profile_title">Cấu Hình Xe Tải &amp; Ràng Buộc</string>
+    <string name="truck_weight_hint">Tổng tải trọng (ví dụ: 15 tấn)</string>
+    <string name="truck_height_hint">Chiều cao xe (ví dụ: 3.8 mét)</string>
+    <string name="truck_axle_hint">Số trục bánh xe (ví dụ: 3 trục)</string>
+    <string name="apply_truck_profile">Áp dụng thông số xe tải</string>
+
+    <!-- Real-time Alerts -->
+    <string name="weather_warning_title">⛈️ Cảnh báo thời tiết lộ trình</string>
+    <string name="weather_warning_desc">Mưa giông và sương mù dày đặc cách 12km phía trước. Hãy giảm tốc độ và giữ khoảng cách an toàn.</string>
+    <string name="traffic_reroute_title">Tuyến đường thay thế nhanh hơn</string>
+    <string name="traffic_reroute_desc">Phát hiện ùn tắc đoạn Cầu Nhật Tân (+14 ph). Đề xuất chuyển hướng qua Cầu Thăng Long tiết kiệm 9 phút.</string>
+    <string name="accept_reroute">Đổi lộ trình</string>
+
+    <!-- POI and Favourites -->
+    <string name="saved_home">🏠 Nhà riêng</string>
+    <string name="saved_work">🏢 Cơ quan</string>
+    <string name="saved_favs">⭐ Địa điểm yêu thích</string>
+    <string name="manage_saved_places">Quản lý địa điểm đã lưu</string>
+</resources>

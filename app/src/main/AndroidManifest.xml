@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Location & Offline Map Networking Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Foreground Service Permissions for GPX Track Recording -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ic_magic_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_magic_logo"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.MagicEarth"
+        tools:targetApi="34">
+
+        <!-- Android Auto Vehicle Integration Metadata -->
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+        <meta-data
+            android:name="androidx.car.app.minCarApiLevel"
+            android:value="1" />
+
+        <!-- Main Map & Navigation Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Head-Up Display (HUD) Night Projection Activity -->
+        <activity
+            android:name=".hud.HUDActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MagicEarth.HUD"
+            android:screenOrientation="fullSensor"
+            android:configChanges="orientation|screenSize" />
+
+        <!-- Background GPS Track Recording Service -->
+        <service
+            android:name=".service.GPXRecorderService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <!-- Smartwatch Turn-by-Turn Companion Sync Service -->
+        <service
+            android:name=".service.SmartwatchNavigationService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <!-- Android Auto Car Central Screen Service -->
+        <service
+            android:name=".car.MagicEarthCarAppService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.NAVIGATION" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

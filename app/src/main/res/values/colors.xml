@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Magic Earth Brand Neon Purple Palette -->
+    <color name="me_primary">#7928CA</color>
+    <color name="me_primary_light">#9F7AEA</color>
+    <color name="me_primary_dark">#553C9A</color>
+    <color name="me_purple_glow">#4C1D95</color>
+
+    <!-- Accent Safety & Alert Colors -->
+    <color name="me_accent_cyan">#00F0FF</color>
+    <color name="me_accent_green">#10B981</color>
+    <color name="me_accent_lime">#76FF03</color>
+    <color name="me_accent_orange">#F59E0B</color>
+    <color name="me_accent_red">#EF4444</color>
+
+    <!-- Highway Signposts -->
+    <color name="me_highway_green">#007A3D</color>
+    <color name="me_express_blue">#0055A5</color>
+    <color name="me_sign_gold">#FFD200</color>
+
+    <!-- Dark Surfaces & Text -->
+    <color name="me_bg_dark">#0B0E14</color>
+    <color name="me_bg_card">#161E2E</color>
+    <color name="me_bg_card_elevated">#222C42</color>
+    <color name="me_border_subtle">#334155</color>
+    <color name="me_text_primary">#FFFFFF</color>
+    <color name="me_text_secondary">#94A3B8</color>
+    <color name="me_text_muted">#64748B</color>
+
+    <!-- Pure Black for OLED HUD Windshield Mode -->
+    <color name="hud_pure_black">#000000</color>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/me_bg_card"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_map_style"
+        android:textColor="@color/me_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn góc nhìn và lớp hiển thị phù hợp nhu cầu di chuyển"
+        android:textColor="@color/me_text_secondary"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp" />
+
+    <RadioGroup
+        android:id="@+id/rgMapLayers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rbVector2D"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🗺️ Bản đồ 2D (Mặt phẳng tiêu chuẩn)"
+            android:textColor="@color/me_text_primary"
+            android:textSize="14sp"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/rbVector3D"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🏙️ Bản đồ 3D (Khối nhà lập thể OSM)"
+            android:textColor="@color/me_text_primary"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rbSatellite"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🛰️ Ảnh Vệ Tinh Trực Quan (Satellite)"
+            android:textColor="@color/me_text_primary"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rbTerrain"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="⛰️ Địa Hình &amp; Đổ Bóng Cao Độ (Terrain)"
+            android:textColor="@color/me_text_primary"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rbDark"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🌙 Chế Độ Đêm OLED Tối Ưu Pin (Dark)"
+            android:textColor="@color/me_text_primary"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+</LinearLayout>

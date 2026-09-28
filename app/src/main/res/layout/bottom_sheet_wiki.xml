@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_glass_card"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvWikiCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🏛️ Di Tích Lịch Sử • Wikipedia"
+        android:textColor="@color/me_accent_cyan"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvWikiTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hồ Hoàn Kiếm (Hồ Gươm)"
+        android:textColor="@color/me_text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp" />
+
+    <TextView
+        android:id="@+id/tvWikiSnippet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hồ Hoàn Kiếm là biểu tượng văn hóa ngàn năm của thủ đô Hà Nội. Nơi đây gắn liền với truyền thuyết vua Lê Lợi trả gươm thần cho Rùa Vàng sau khi đánh đuổi quân Minh xâm lược."
+        android:textColor="@color/me_text_secondary"
+        android:textSize="13.5sp"
+        android:lineSpacingExtra="3dp"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWikiRouteHere"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="2"
+            android:text="🚗 Dẫn đường tới đây"
+            android:textStyle="bold"
+            app:backgroundTint="@color/me_primary"
+            app:cornerRadius="14dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWikiSaveFav"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:text="⭐ Lưu"
+            android:textColor="@color/me_text_primary"
+            app:cornerRadius="14dp" />
+    </LinearLayout>
+
+</LinearLayout>

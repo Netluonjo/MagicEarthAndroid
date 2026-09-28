@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.MagicEarth" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/me_primary</item>
+        <item name="colorOnPrimary">@color/me_text_primary</item>
+        <item name="colorSecondary">@color/me_accent_cyan</item>
+        <item name="colorOnSecondary">@color/me_bg_dark</item>
+        <item name="android:statusBarColor">@color/me_bg_dark</item>
+        <item name="android:navigationBarColor">@color/me_bg_dark</item>
+        <item name="android:windowBackground">@color/me_bg_dark</item>
+    </style>
+
+    <!-- Head-Up Display (HUD) Fullscreen OLED Theme -->
+    <style name="Theme.MagicEarth.HUD" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/hud_pure_black</item>
+        <item name="android:statusBarColor">@color/hud_pure_black</item>
+        <item name="android:navigationBarColor">@color/hud_pure_black</item>
+        <item name="android:keepScreenOn">true</item>
+    </style>
+</resources>

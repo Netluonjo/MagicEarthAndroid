@@ -1,0 +1,1579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/me_bg_dark">
+
+    <!-- 1. MAPLIBRE GL NATIVE MAP VIEW -->
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 1b. ROUTE DRAWING CANVAS OVERLAY (Custom Running Trails) -->
+    <com.magicearth.navigation.ui.RouteDrawingOverlayView
+        android:id="@+id/routeDrawingOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 2. TOP BRAND & STATUS BAR -->
+    <LinearLayout
+        android:id="@+id/topBrandBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:background="#E60B0E14"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_magic_logo"
+            android:contentDescription="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Magic Earth"
+                android:textColor="@color/me_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_badge"
+                android:textColor="@color/me_accent_green"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Offline Maps Trigger -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOfflineMaps"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="@string/offline_maps"
+            android:textSize="11sp"
+            android:textColor="@color/me_text_primary"
+            app:cornerRadius="18dp" />
+    </LinearLayout>
+
+    <!-- 3. FLOATING SEARCH & CATEGORY BAR -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/searchCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/me_bg_card"
+        app:layout_constraintTop_toBottomOf="@id/topBrandBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔍"
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp" />
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:hint="@string/search_hint"
+                    android:textColor="@color/me_text_primary"
+                    android:textColorHint="@color/me_text_muted"
+                    android:textSize="13.5sp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text" />
+
+                <!-- Open Route Planner Button -->
+                <ImageButton
+                    android:id="@+id/btnOpenRoutePlanner"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_glass_card"
+                    android:src="@android:drawable/ic_menu_directions"
+                    app:tint="@color/me_text_primary"
+                    android:contentDescription="Lập lộ trình" />
+            </LinearLayout>
+
+            <!-- Quick Category Scroll -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDrawRunningRoute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🏃 Tự vẽ đường chạy"
+                        android:textColor="@color/me_accent_lime"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipSaved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="⭐ Đã lưu"
+                        android:textColor="@color/me_sign_gold"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipFuel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="⛽ Cây xăng"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipEV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="⚡ Trạm sạc EV"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipParking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="🅿️ Bãi xe"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipSights"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="🏛️ Danh lam"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- POI SEARCH RESULTS DROPDOWN CARD -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/poiResultsCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/me_bg_card_elevated"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/searchCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp">
+
+                <TextView
+                    android:id="@+id/tvPoiResultsTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Kết quả địa điểm ngoại tuyến"
+                    android:textColor="@color/me_accent_cyan"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btnClosePoiResults"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/me_text_muted"
+                    android:contentDescription="Đóng" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPoiResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="220dp"
+                android:nestedScrollingEnabled="false" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 4. FLOATING RIGHT TOOLBAR CONTROLS (3D, Layers, Traffic, Incident, GPX, Recenter) -->
+    <LinearLayout
+        android:id="@+id/mapControls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/searchCard"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 2D / 3D Mode Toggle Badge Button -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnToggle2D3D"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@color/me_bg_card">
+
+            <TextView
+                android:id="@+id/tv2D3D"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="3D"
+                android:textColor="@color/me_accent_cyan"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:background="?android:attr/selectableItemBackground" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Map Layers & Styles (Vector, Satellite, Terrain, Dark) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabLayers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:fabSize="mini"
+            app:backgroundTint="@color/me_bg_card"
+            app:tint="@color/me_accent_cyan"
+            android:contentDescription="Layers"
+            android:src="@android:drawable/ic_menu_agenda" />
+
+        <!-- Traffic Overlay Toggle -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabTraffic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:fabSize="mini"
+            app:backgroundTint="@color/me_bg_card"
+            app:tint="@color/me_accent_green"
+            android:contentDescription="Traffic"
+            android:src="@android:drawable/ic_menu_compass" />
+
+        <!-- Community Incident Report (Accident, Camera, Hazard) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabReportIncident"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:fabSize="mini"
+            app:backgroundTint="@color/me_bg_card"
+            app:tint="@color/me_accent_orange"
+            android:contentDescription="Report"
+            android:src="@android:drawable/ic_dialog_alert" />
+
+        <!-- Custom Running Route Drawing Toggle Button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDrawRunningRoute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:fabSize="mini"
+            app:backgroundTint="@color/me_bg_card"
+            app:tint="@color/me_accent_lime"
+            android:contentDescription="Vẽ đường chạy bộ"
+            android:src="@android:drawable/ic_menu_edit" />
+
+        <!-- GPX Recorder Toggle -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRecordGPX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:fabSize="mini"
+            app:backgroundTint="@color/me_bg_card"
+            app:tint="@color/me_accent_red"
+            android:contentDescription="GPX"
+            android:src="@android:drawable/ic_media_play" />
+
+        <!-- Recenter Location -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRecenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            app:backgroundTint="@color/me_bg_card"
+            app:tint="@color/me_accent_cyan"
+            android:contentDescription="Recenter"
+            android:src="@android:drawable/ic_menu_mylocation" />
+    </LinearLayout>
+
+    <!-- 5. REAL-TIME ALERTS (Weather & Traffic Reroute Cards) -->
+    <!-- 5. REAL-TIME ALERTS (Weather, Incident & Traffic Reroute Cards) -->
+    <!-- Faster Traffic Reroute Suggestion Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardRerouteSuggestion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="#F00F172A"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/searchCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚡"
+                    android:textSize="22sp"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/tvRerouteTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lộ trình thay thế nhanh hơn 12 phút!"
+                    android:textColor="@color/me_accent_green"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/btnDismissReroute"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/me_text_muted"
+                    android:contentDescription="Bỏ qua" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRerouteDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tránh điểm ùn tắc 2.5km phía trước. Tuyến đường mới thông suốt hơn."
+                android:textColor="@color/me_text_secondary"
+                android:textSize="11.5sp"
+                android:layout_marginTop="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end|center_vertical"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIgnoreReroute"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="Giữ lộ trình cũ"
+                    android:textColor="@color/me_text_muted"
+                    android:textSize="11sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAcceptReroute"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Đổi tuyến ngay"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp"
+                    app:backgroundTint="@color/me_accent_green"
+                    app:cornerRadius="18dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Community Incident Alert Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardIncidentAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#F01E1B4B"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cardRerouteSuggestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvIncidentIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🚧"
+                    android:textSize="22sp"
+                    android:layout_marginEnd="8dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvIncidentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Công trường thi công"
+                        android:textColor="@color/me_accent_orange"
+                        android:textStyle="bold"
+                        android:textSize="12.5sp" />
+
+                    <TextView
+                        android:id="@+id/tvIncidentRoad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cách 450 m trên Đường Vành Đai 3"
+                        android:textColor="@color/me_text_primary"
+                        android:textSize="11.5sp"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnDismissIncident"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/me_text_muted"
+                    android:contentDescription="Đóng" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvIncidentDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đang thi công trải thảm nhựa làn ngoài cùng. Xe di chuyển chậm."
+                android:textColor="@color/me_text_secondary"
+                android:textSize="11sp"
+                android:layout_marginTop="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sự cố còn ở đây không?"
+                    android:textColor="@color/me_text_muted"
+                    android:textSize="10.5sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIncidentStillThere"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="👍 Vẫn còn"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    app:backgroundTint="#4010B981"
+                    app:cornerRadius="15dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIncidentCleared"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="6dp"
+                    android:text="❌ Đã hết"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp"
+                    app:backgroundTint="#40EF4444"
+                    app:cornerRadius="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Weather Warning Along Route -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardWeatherAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#F0111827"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cardIncidentAlert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvWeatherIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⛈️"
+                android:textSize="26sp"
+                android:layout_marginEnd="10dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvWeatherTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cảnh báo mưa dông lớn / Ngập nước"
+                    android:textColor="@color/me_accent_orange"
+                    android:textStyle="bold"
+                    android:textSize="12.5sp" />
+
+                <TextView
+                    android:id="@+id/tvWeatherDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tầm nhìn giảm dưới 100m. Bật đèn cos và giữ khoảng cách an toàn 50m."
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnDismissWeather"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="@color/me_text_muted"
+                android:contentDescription="Đóng" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 6. ACTIVE NAVIGATION OVERLAYS (Turn-by-Turn, Signpost, Lane Guidance) -->
+    <!-- 6. ACTIVE NAVIGATION OVERLAYS (Turn-by-Turn, Signpost, Lane Guidance & Speed Camera Alert) -->
+    <!-- Authentic Highway Green / National Blue Signpost -->
+    <LinearLayout
+        android:id="@+id/signpostCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_signpost_highway"
+        android:padding="12dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/topBrandBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Top Header row: Route Shield, Exit Badge & Audio Controls -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Route Shield Badge (e.g. CT.01 / AH1 or QL.1A) -->
+            <TextView
+                android:id="@+id/tvSignBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_route_shield"
+                android:text="CT.01 / AH1"
+                android:textColor="#0F172A"
+                android:textStyle="bold"
+                android:textSize="11.5sp"
+                android:paddingHorizontal="7dp"
+                android:paddingVertical="3dp" />
+
+            <!-- Exit Badge / Nút Giao (e.g. LỐI RA 08 / EXIT 08) -->
+            <TextView
+                android:id="@+id/tvSignExitBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_exit_badge"
+                android:text="LỐI RA 08"
+                android:textColor="#0F172A"
+                android:textStyle="bold"
+                android:textSize="11sp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:visibility="visible" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- Voice Language Selector Button (VI / EN) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVoiceLanguage"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="🇻🇳 VI"
+                android:textSize="10.5sp"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="#40000000"
+                app:cornerRadius="16dp" />
+
+            <!-- Mute / Unmute Voice Guidance -->
+            <ImageButton
+                android:id="@+id/btnVoiceMute"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_voice_on"
+                android:scaleType="centerInside"
+                app:tint="@color/me_text_primary"
+                android:contentDescription="Bật/tắt giọng nói" />
+
+            <!-- Quick Stop Navigation -->
+            <ImageButton
+                android:id="@+id/btnStopNavTop"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:scaleType="centerInside"
+                app:tint="#FFFFFF"
+                android:contentDescription="@string/stop_navigation" />
+        </LinearLayout>
+
+        <!-- Main Destination & Direction row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <!-- Turn Icon -->
+            <TextView
+                android:id="@+id/tvSignTurnIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="↱"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Destination Name -->
+            <TextView
+                android:id="@+id/tvSignDest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="LỐI RA SÂN BAY NỘI BÀI"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:shadowColor="#80000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:maxLines="2"
+                android:ellipsize="end" />
+
+            <!-- Distance to Turn / Exit -->
+            <TextView
+                android:id="@+id/tvSignDist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300 m"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Visual Lane Assistance Custom View -->
+    <com.magicearth.navigation.ui.LaneAssistanceView
+        android:id="@+id/laneAssistView"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/signpostCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- REAL-TIME SPEED CAMERA & TRAFFIC CAMERA ALERT CARD -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCameraAlert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="#F21A0F15"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/laneAssistView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp"
+            android:background="@drawable/bg_camera_banner">
+
+            <!-- Camera Pulsing Badge -->
+            <TextView
+                android:id="@+id/tvCameraIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="📷"
+                android:textSize="22sp"
+                android:background="@drawable/bg_glass_card" />
+
+            <!-- Camera Information & Location -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/tvCameraTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Camera Bắn Tốc Độ Phía Trước"
+                    android:textColor="@color/me_accent_red"
+                    android:textSize="12.5sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCameraRoadName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cao tốc Pháp Vân - Cầu Giẽ"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp"
+                    android:layout_marginTop="1dp" />
+
+                <TextView
+                    android:id="@+id/tvCameraDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cách 450 m • Hãy giảm tốc độ"
+                    android:textColor="@color/me_accent_orange"
+                    android:textSize="11.5sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <!-- Speed Limit Sign Circular Indicator -->
+            <TextView
+                android:id="@+id/tvCameraSpeedLimit"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/bg_speed_limit"
+                android:gravity="center"
+                android:text="80"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Dismiss Alert Button -->
+            <ImageButton
+                android:id="@+id/btnDismissCamera"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="@color/me_text_muted"
+                android:contentDescription="Đóng" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- 7. BOTTOM IN-DRIVE FLOATING BAR -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/driveBottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/me_bg_card"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="14dp"
+            android:gravity="center_vertical">
+
+            <!-- Speed Limit Sign -->
+            <TextView
+                android:id="@+id/tvSpeedLimit"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_speed_limit"
+                android:gravity="center"
+                android:text="80"
+                android:textColor="#000000"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <!-- Live Speedometer -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/tvLiveSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/me_text_primary"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvLiveSpeedUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speed_unit"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Runner Live Calories Counter (Visible during running workout) -->
+            <LinearLayout
+                android:id="@+id/layoutRunnerLiveCalories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="14dp"
+                android:gravity="center_horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvLiveCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/me_accent_orange"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔥 kcal"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Remaining Trip Stats -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:id="@+id/tvDriveEta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đang tính ETA..."
+                    android:textColor="@color/me_accent_green"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDriveRemDist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đang tính cự ly..."
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- HUD Button Trigger -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnterHUD"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="HUD"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/me_accent_cyan"
+                app:cornerRadius="19dp" />
+
+            <!-- Stop Nav Button -->
+            <ImageButton
+                android:id="@+id/btnStopNav"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_glass_card"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                app:tint="@color/me_accent_red"
+                android:contentDescription="@string/stop_navigation" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 8. ROUTE PLANNER BOTTOM SHEET CARD -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/routePlannerCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="14dp"
+        app:cardBackgroundColor="@color/me_bg_card"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDestinationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lập lộ trình &amp; Phương thức"
+                        android:textColor="@color/me_text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/tvDestinationAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vị trí trên bản đồ"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="11.5sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:visibility="gone"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
+                <!-- Save Favorite Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSaveFavorite"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="6dp"
+                    android:text="⭐ Lưu"
+                    android:textSize="11sp"
+                    android:textColor="@color/me_sign_gold"
+                    app:cornerRadius="17dp" />
+
+                <!-- Truck Config Button (Visible when Truck mode selected) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTruckConfig"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="⚙️ Tải"
+                    android:textSize="10.5sp"
+                    android:textColor="@color/me_accent_cyan"
+                    android:visibility="gone"
+                    app:cornerRadius="16dp" />
+
+                <ImageButton
+                    android:id="@+id/btnCloseRoutePlanner"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/me_text_muted"
+                    android:contentDescription="Đóng" />
+            </LinearLayout>
+
+            <!-- Transport Tabs (Car, Truck, Bike, Walk, Transit) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_glass_card"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/tabCar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="🚗 Ô tô"
+                    android:textColor="@color/me_accent_cyan"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tabTruck"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="🚚 Tải"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tabBike"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="🚲 Xe đạp"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tabWalk"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="🚶 Đi bộ"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tabTransit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="🚌 Transit"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Multi-stop Waypoints row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvWaypointsSummary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hành trình: Điểm A ➔ Điểm B (Trực tiếp)"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddWaypoint"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="+ Thêm điểm dừng C"
+                    android:textSize="10.5sp"
+                    android:textColor="@color/me_text_primary"
+                    app:cornerRadius="16dp" />
+            </LinearLayout>
+
+            <!-- Custom Elevation Profile Canvas Graph View -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Trắc dọc cao độ (Elevation Profile)"
+                    android:textColor="@color/me_text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvSurfaceQuality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bề mặt: 94% Nhựa, 6% Bê tông"
+                    android:textColor="@color/me_accent_green"
+                    android:textSize="10.5sp" />
+            </LinearLayout>
+
+            <com.magicearth.navigation.ui.ElevationProfileView
+                android:id="@+id/elevationProfileView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="6dp" />
+
+            <!-- Route Metrics summary text -->
+            <TextView
+                android:id="@+id/tvRouteSummaryStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24.8 km • 27 phút (Đến lúc 10:18) • Tuyến thông thoáng"
+                android:textColor="@color/me_accent_cyan"
+                android:textSize="11.5sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <!-- Start Navigation Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStartNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/start_navigation"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/me_text_primary"
+                app:backgroundTint="@color/me_accent_green"
+                app:cornerRadius="16dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 8. RUNNING ROUTE DRAWING STUDIO CARD -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardRunningStudio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="16dp"
+        app:cardBackgroundColor="@color/me_bg_card"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title & Close -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏃"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tự Vẽ Tuyến Chạy Bộ"
+                        android:textColor="@color/me_text_primary"
+                        android:textSize="15.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRunningStudioStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✏️ Dùng 1 ngón tay vuốt vẽ cung đường mong muốn"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="10.5sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnCloseRunningStudio"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="@color/me_text_secondary"
+                    android:contentDescription="Đóng" />
+            </LinearLayout>
+
+            <!-- Real-time Metrics Dashboard -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_glass_card"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <!-- Distance -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvRunDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textColor="#76FF03"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="km quãng đường"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="9.5sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="28dp"
+                    android:background="#33FFFFFF" />
+
+                <!-- Time -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvRunDuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/me_accent_cyan"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="phút ước tính"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="9.5sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="28dp"
+                    android:background="#33FFFFFF" />
+
+                <!-- Calories -->
+                <LinearLayout
+                    android:id="@+id/layoutRunCalories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvRunCalories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/me_accent_orange"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRunCaloriesWeightLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="kcal (65kg ⚙️)"
+                        android:textColor="@color/me_text_secondary"
+                        android:textSize="9.5sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Mode Selector: [✏️ Chế độ vẽ] vs [👁️ Vuốt xem bản đồ] -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnModeDraw"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="✏️ Chế độ vẽ"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#0B0E14"
+                    app:backgroundTint="#76FF03"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnModeInspect"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1.2"
+                    android:layout_marginStart="6dp"
+                    android:text="👁️ Vuốt xem bản đồ"
+                    android:textSize="11sp"
+                    android:textColor="@color/me_text_primary"
+                    app:backgroundTint="#2A3546"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <!-- Tools Row: Toàn cảnh, Khép vòng, Hoàn tác, Xóa -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFitRoute"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="1.0"
+                    android:text="🎯 Toàn cảnh"
+                    android:textSize="9sp"
+                    android:textColor="@color/me_accent_cyan"
+                    app:cornerRadius="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSnapRoad"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="1.1"
+                    android:layout_marginStart="3dp"
+                    android:text="🧲 Nắn đường"
+                    android:textSize="9sp"
+                    android:textColor="#76FF03"
+                    app:cornerRadius="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCloseLoop"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="1.0"
+                    android:layout_marginStart="3dp"
+                    android:text="🔄 Khép vòng"
+                    android:textSize="9sp"
+                    android:textColor="@color/me_text_primary"
+                    app:cornerRadius="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUndoDraw"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="0.7"
+                    android:layout_marginStart="3dp"
+                    android:text="↩️ Lùi"
+                    android:textSize="9sp"
+                    android:textColor="@color/me_text_primary"
+                    app:cornerRadius="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearDraw"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="0.7"
+                    android:layout_marginStart="3dp"
+                    android:text="🗑️ Xóa"
+                    android:textSize="9sp"
+                    android:textColor="@color/me_accent_red"
+                    app:cornerRadius="10dp" />
+            </LinearLayout>
+
+            <!-- Start Running Workout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStartRunningWorkout"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:text="🏃 BẮT ĐẦU CHẠY BỘ NGAY"
+                android:textSize="13.5sp"
+                android:textStyle="bold"
+                android:textColor="#0B0E14"
+                app:backgroundTint="#76FF03"
+                app:cornerRadius="14dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

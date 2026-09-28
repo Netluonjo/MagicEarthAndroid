@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/me_bg_card"
+    android:padding="22dp">
+
+    <!-- Header with Running Icon -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏃"
+            android:textSize="26sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cân Nặng Người Chạy"
+                android:textColor="@color/me_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chuẩn ACSM: Quãng đường (km) × Cân nặng (kg) × 1.036"
+                android:textColor="@color/me_text_secondary"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1AFFFFFF"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp" />
+
+    <!-- Quick Weight Preset Chips -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn nhanh mức cân nặng phổ biến:"
+        android:textColor="@color/me_text_secondary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip50kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50 kg"
+                android:textColor="@color/me_text_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip55kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="55 kg"
+                android:textColor="@color/me_text_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip60kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60 kg"
+                android:textColor="@color/me_text_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip65kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="65 kg (Tiêu chuẩn)"
+                android:textColor="@color/me_text_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip70kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="70 kg"
+                android:textColor="@color/me_text_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip75kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="75 kg"
+                android:textColor="@color/me_text_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip80kg"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80 kg"
+                android:textColor="@color/me_text_primary" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- Custom Weight Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        app:boxStrokeColor="@color/me_accent_orange"
+        app:hintTextColor="@color/me_accent_orange"
+        android:hint="Cân nặng chính xác của bạn (kg)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etRunnerWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="65.0"
+            android:textColor="@color/me_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvCalorieFormulaPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔥 Mỗi 1.0 km chạy bạn sẽ tiêu hao ~67 kcal năng lượng"
+        android:textColor="@color/me_accent_orange"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp" />
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="end">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelWeight"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy"
+            android:textColor="@color/me_text_secondary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveWeight"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Lưu &amp; Cập Nhật Calo"
+            android:textColor="#0B0E14"
+            app:backgroundTint="@color/me_accent_orange"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
+</LinearLayout>
